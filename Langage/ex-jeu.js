@@ -1,3 +1,5 @@
+'use strict';
+
 const readline = require('readline');
 
 const rl = readline.createInterface({
@@ -25,13 +27,19 @@ function getRandomIntInclusive(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-var entierAlea = getRandomIntInclusive(0, 100);
-var essais = [];
 
-var jouer = function() {
+var Jeu = function(options) {
+  options = options || {};
+  var min = options.min || 0;
+  var max = options.max || 100;
 
-  if (essais.length) {
-    console.log('Vous avez déjà joué : ' + essais.join(', '));
+  this._entierAlea = getRandomIntInclusive(min, max);
+  this._essais = [];
+};
+
+Jeu.prototype.jouer = function() {
+  if (this._essais.length) {
+    console.log('Vous avez déjà joué : ' + this._essais.join(', '));
   }
 
   rl.question('Saisir un nombre ', (answer) => {
@@ -40,19 +48,19 @@ var jouer = function() {
 
     if (isNaN(entierSaisi)) {
       console.log('Erreur : vous devez saisir un nombre');
-      return jouer();
+      return this.jouer();
     }
 
-    essais.push(entierSaisi);
+    this._essais.push(entierSaisi);
 
-    if (entierSaisi < entierAlea) {
+    if (entierSaisi < this._entierAlea) {
       console.log('Trop petit');
-      return jouer();
+      return this.jouer();
     }
 
-    if (entierSaisi > entierAlea) {
+    if (entierSaisi > this._entierAlea) {
       console.log('Trop grand');
-      return jouer();
+      return this.jouer();
     }
 
     console.log('Gagné');
@@ -60,4 +68,8 @@ var jouer = function() {
   });
 };
 
-jouer();
+var jeu = new Jeu({
+  min: 10,
+  max: 20,
+});
+jeu.jouer();
