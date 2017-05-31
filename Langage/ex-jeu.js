@@ -9,74 +9,73 @@ const rl = readline.createInterface({
 
 // 1 - Réécrire ces fonctions sous la forme
 // const maFct = function() {}
-function getRandom() {
+const getRandom = function() {
   return Math.random();
-}
+};
 
-function getRandomArbitrary(min, max) {
+const getRandomArbitrary = function(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
-}
+};
 
-function getRandomInt(min, max) {
+const getRandomInt = function(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min)) + min;
-}
+};
 
-function getRandomIntInclusive(min, max) {
+const getRandomIntInclusive = function(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+};
 
 // 2 - Ecrire la fonction constructeur et sa méthode jouer
 // avec le mot clé class
 // 3 - Utiliser la valeur par défault pour options
 // 4 - Remplacer tous les var par let ou const
-var Jeu = function(options) {
-  options = options || {};
-  var min = options.min || 0;
-  var max = options.max || 100;
-
-  this._entierAlea = getRandomIntInclusive(min, max);
-  this._essais = [];
-};
-
-Jeu.prototype.jouer = function() {
-  if (this._essais.length) {
-    // 5 - Utiliser une template string
-    console.log('Vous avez déjà joué : ' + this._essais.join(', '));
+class Jeu {
+  constructor({min = 0, max = 100} = {}) {
+    this._entierAlea = getRandomIntInclusive(min, max);
+    this._essais = [];
   }
 
-  rl.question('Saisir un nombre ', (answer) => {
-
-    // 6 - Utiliser parseInt et isNaN sur l'objet global Number
-    var entierSaisi = parseInt(answer);
-
-    if (isNaN(entierSaisi)) {
-      console.log('Erreur : vous devez saisir un nombre');
-      return this.jouer();
+  jouer() {
+    if (this._essais.length) {
+      // 5 - Utiliser une template string
+      console.log(`Vous avez déjà joué : ${this._essais.join(', ')}`);
     }
 
-    this._essais.push(entierSaisi);
+    rl.question('Saisir un nombre ', (answer) => {
 
-    if (entierSaisi < this._entierAlea) {
-      console.log('Trop petit');
-      return this.jouer();
-    }
+      // 6 - Utiliser parseInt et isNaN sur l'objet global Number
+      const entierSaisi = Number.parseInt(answer);
 
-    if (entierSaisi > this._entierAlea) {
-      console.log('Trop grand');
-      return this.jouer();
-    }
+      if (Number.isNaN(entierSaisi)) {
+        console.log('Erreur : vous devez saisir un nombre');
+        return this.jouer();
+      }
 
-    console.log('Gagné');
-    rl.close();
-  });
-};
+      this._essais.push(entierSaisi);
 
-var jeu = new Jeu({
+      if (entierSaisi < this._entierAlea) {
+        console.log('Trop petit');
+        return this.jouer();
+      }
+
+      if (entierSaisi > this._entierAlea) {
+        console.log('Trop grand');
+        return this.jouer();
+      }
+
+      console.log('Gagné');
+      rl.close();
+    });
+  }
+}
+
+const jeu = new Jeu({
   min: 10,
   max: 20,
 });
+
 jeu.jouer();
