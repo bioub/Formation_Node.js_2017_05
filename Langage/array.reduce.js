@@ -1,3 +1,4 @@
+'use strict';
 
 var nbs = [1, 3, 8];
 

@@ -28,7 +28,7 @@ var contact = {
   prenom: 'Romain',
   hello: function() {
     return "Je m'appelle " + this.prenom;
-  }
+  },
 };
 
 console.log(contact.hello()); // Je m'appelle Romain
@@ -36,6 +36,7 @@ console.log(contact.hello()); // Je m'appelle Romain
 // On peut boucler sur les membres
 for (var prop in contact) {
   console.log(prop);
+  console.log(contact[prop]);
 }
 
 // Si besoin récurrent
@@ -86,8 +87,21 @@ var romain = new Contact('Romain');
 console.log(romain.prenom); // (dans l'objet)
 console.log(romain instanceof Contact); // true
 console.log(romain.hello()); // (dans le proto de Contact)
-console.lgo(romain.hasOwnProperty('prenom')); // true
-console.lgo(romain.hasOwnProperty('hello')); // false
-console.lgo(romain.toto); // undefined
+console.log(romain.hasOwnProperty('prenom')); // true
+console.log(romain.hasOwnProperty('hello')); // false
+console.log(romain.toto); // undefined
 var jean = new Contact('Jean');
 console.log(romain.hello === jean.hello); // true
+
+class ContactES6 {
+  constructor(prenom) {
+    this.prenom = prenom;
+  }
+
+  hello() {
+    return "Je m'appelle " + this.prenom;
+  }
+}
+
+console.log(typeof ContactES6); // function
+console.log(typeof ContactES6.prototype.hello); // function

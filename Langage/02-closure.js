@@ -1,3 +1,4 @@
+'use strict';
 
 var logClosure = function(msg) {
   // Portée de closure
