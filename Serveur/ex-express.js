@@ -9,6 +9,21 @@ retourne rien, et définit un status code à 204
 2 / Répondre 404 si le contact 123 à déjà été supprimé
  */
 const express = require('express');
+const morgan = require('morgan');
+
+const authorize = (req, res, next) => {
+    const token = req.headers.authorization;
+
+    // token ok
+    if (token === '123') {
+        return next();
+    }
+
+    res.statusCode = 401;
+    res.json({
+        error: 'Bad token'
+    });
+};
 
 const contacts = [{
     prenom: 'Jean',
@@ -22,21 +37,59 @@ const contacts = [{
 }];
 
 const app = express();
+app.use(morgan('dev'));
+
+/*
+app.use((req, res, next) => {
+   console.log(`${req.method} ${req.url}`);
+   next();
+});
+*/
 
 app.get('/api/contact', (req, res, next) => {
     res.json(contacts);
 });
 
-app.get('/api/contact/123', (req, res, next) => {
-    const contact = contacts.find(c => c.id === 123);
+app.get('/api/contact/:id', (req, res, next) => {
+    const id = Number(req.params.id);
+    const contact = contacts.find(c => c.id === id);
+
+    if (!contact) {
+        return next(); // 404
+        // return next(err); // 500
+    }
+
     res.json(contact);
 });
 
-app.delete('/api/contact/123', (req, res, next) => {
-    const i = contacts.findIndex(c => c.id === 123);
+// app.delete('/api/contact/:id', authorize);
+app.delete('/api/contact/:id', authorize, (req, res, next) => {
+    const id = Number(req.params.id);
+    const i = contacts.findIndex(c => c.id === id);
+
+    if (i === -1) {
+        return next();
+    }
+
     contacts.splice(i, 1);
     res.statusCode = 204;
     res.end();
+});
+
+// 404
+app.use('/api', (req, res, next) => {
+    res.statusCode = 404;
+    res.json({
+        error: 'Not found'
+    });
+});
+
+// 500
+app.use('/api', (err, req, res, next) => {
+    res.statusCode = 500;
+    res.json({
+        error: err.message
+    });
 });
 
 app.listen(8080, () => {
