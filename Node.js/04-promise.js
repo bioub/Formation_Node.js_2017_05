@@ -8,6 +8,8 @@ fs.appendFile(logPath, Math.random() + '\n')
     .then(() => fs.appendFile(logPath, Math.random() + '\n'))
     .then(() => fs.appendFile(logPath, Math.random() + '\n'))
     .then(() => fs.appendFile(logPath, Math.random() + '\n'))
-    .then(() => fs.appendFile(logPath, Math.random() + '\n'));
+    .then(() => fs.appendFile(logPath, Math.random() + '\n'))
+    .then(() => console.log('Done'))
+    .catch(err => console.log(err));
 
 

@@ -12,7 +12,7 @@ const log = function(path, msg) {
           if (err) {
               return reject(err);
           }
-          resolve('Coucou');
+          resolve();
       })
   });
 };

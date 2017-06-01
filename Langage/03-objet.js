@@ -27,7 +27,7 @@ console['log'](Math[prop]); // 3.14.....
 var contact = {
   prenom: 'Romain',
   hello: function() {
-    return "Je m'appelle " + this.prenom;
+    return 'Je m\'appelle ' + this.prenom;
   },
 };
 
@@ -80,7 +80,7 @@ var Contact = function(prenom) {
 };
 
 Contact.prototype.hello = function() {
-  return "Je m'appelle " + this.prenom;
+  return 'Je m\'appelle ' + this.prenom;
 };
 
 var romain = new Contact('Romain');
@@ -99,7 +99,7 @@ class ContactES6 {
   }
 
   hello() {
-    return "Je m'appelle " + this.prenom;
+    return 'Je m\'appelle ' + this.prenom;
   }
 }
 

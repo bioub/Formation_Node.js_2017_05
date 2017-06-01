@@ -10,4 +10,10 @@ async.series([
     cb => fs.appendFile(logPath, Math.random() + '\n', cb),
     cb => fs.appendFile(logPath, Math.random() + '\n', cb),
     cb => fs.appendFile(logPath, Math.random() + '\n', cb),
-]);
+], (err) => {
+    if (err) {
+       return console.log(err);
+    }
+
+    console.log('Done');
+});

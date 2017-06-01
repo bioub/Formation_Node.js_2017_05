@@ -1,5 +1,5 @@
 // Module CommonJS
-const calculette = require('./calculette');
+const calc = require('./calculette');
 const assert = require('assert');
 
-assert.equal(calculette.addition(1, 2), 3);
+assert.equal(calc.addition(1, 2), 3);
