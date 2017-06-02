@@ -1,9 +1,14 @@
-var express = require('express');
+'use strict';
+
 var path = require('path');
+var express = require('express');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
+var mongoose = require('mongoose');
 
 var contacts = require('./routes/contacts');
+
+mongoose.connect('mongodb://localhost/addressbook');
 
 var app = express();
 

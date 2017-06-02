@@ -1,21 +1,14 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var Contact = require('../models/contact');
 var router = express.Router();
-
-const contacts = [{
-    prenom: 'Jean',
-    id: 123
-}, {
-    prenom: 'Eric',
-    id: 456
-}, {
-    prenom: 'Martin',
-    id: 789
-}];
 
 /* Liste des contacts */
 router.get('/', function(req, res, next) {
-  res.render('contacts/list', { contacts: contacts });
+    Contact.find()
+        .then(contacts => {
+            res.render('contacts/list', { contacts: contacts });
+        });
 });
 
 /* Détails d'un contact */
