@@ -1,48 +1,39 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var Contact = require('../models/contact');
+var contactCtrl = require('../controllers/contacts');
 var router = express.Router();
 
 /* Liste des contacts */
-router.get('/', function(req, res, next) {
-    Contact.find()
-        .then(contacts => {
-            res.render('contacts/list', { contacts: contacts });
-        });
-});
+router.get('/',
+    contactCtrl.list,
+);
+
+/* Ajouter un contact (affichage du form) */
+router.get('/add',
+    contactCtrl.addForm,
+);
+
+/* Ajouter un contact */
+router.post('/add',
+    bodyParser.urlencoded({extended: false}),
+    contactCtrl.add,
+);
 
 /* Détails d'un contact */
-router.get('/:id', function(req, res, next) {
-    const id = Number(req.params.id);
-    const contact = contacts.find(c => c.id === id);
-
-    if (!contact) {
-        return next(); // 404
-        // return next(err); // 500
-    }
-
-    res.render('contacts/show', { contact: contact });
-});
+router.get('/:id',
+    contactCtrl.show,
+);
 
 /* Suppression d'un contact (affichage du form) */
-router.get('/:id/delete', function(req, res, next) {
-    res.render('contacts/delete');
-});
+router.get('/:id/delete',
+    contactCtrl.deleteConfirm,
+);
 
 /* Suppression d'un contact */
-router.post('/:id/delete', bodyParser.urlencoded({extended: false}), function(req, res, next) {
-    if (req.body.confirm === 'oui') {
-        const id = Number(req.params.id);
-        const i = contacts.findIndex(c => c.id === id);
+router.post('/:id/delete',
+    bodyParser.urlencoded({extended: false}),
+    contactCtrl.delete,
+);
 
-        if (i === -1) {
-            return next();
-        }
-
-        contacts.splice(i, 1);
-    }
-
-    res.redirect('/contacts');
-});
 
 module.exports = router;

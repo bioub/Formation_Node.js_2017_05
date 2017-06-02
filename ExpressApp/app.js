@@ -8,7 +8,9 @@ var mongoose = require('mongoose');
 
 var contacts = require('./routes/contacts');
 
+mongoose.Promise = Promise;
 mongoose.connect('mongodb://localhost/addressbook');
+
 
 var app = express();
 
