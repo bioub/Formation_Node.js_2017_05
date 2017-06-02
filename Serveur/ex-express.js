@@ -46,11 +46,11 @@ app.use((req, res, next) => {
 });
 */
 
-app.get('/api/contact', (req, res, next) => {
+app.get('/api/contacts', (req, res, next) => {
     res.json(contacts);
 });
 
-app.get('/api/contact/:id', (req, res, next) => {
+app.get('/api/contacts/:id', (req, res, next) => {
     const id = Number(req.params.id);
     const contact = contacts.find(c => c.id === id);
 
@@ -63,7 +63,7 @@ app.get('/api/contact/:id', (req, res, next) => {
 });
 
 // app.delete('/api/contact/:id', authorize);
-app.delete('/api/contact/:id', authorize, (req, res, next) => {
+app.delete('/api/contacts/:id', authorize, (req, res, next) => {
     const id = Number(req.params.id);
     const i = contacts.findIndex(c => c.id === id);
 

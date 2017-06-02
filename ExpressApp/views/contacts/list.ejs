@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Liste des contacts</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+<h1>Liste des contacts</h1>
+<table>
+    <% for (let c of contacts) { %>
+    <tr>
+        <td><%=c.prenom%></td>
+        <td>
+            <a href="/contacts/<%=c.id%>">Afficher</a>
+            <a href="/contacts/<%=c.id%>/delete">Supprimer</a>
+        </td>
+    </tr>
+    <% } %>
+</table>
+</body>
+</html>
