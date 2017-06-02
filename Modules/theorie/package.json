@@ -1,0 +1,11 @@
+{
+  "name": "theorie",
+  "version": "0.0.1",
+  "dependencies": {
+    "chai": "^4.0.1",
+    "mocha": "^3.4.2"
+  },
+  "scripts": {
+    "test": "mocha"
+  }
+}

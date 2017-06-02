@@ -1,2 +1,2 @@
-require('./test-calculette');
-require('./test-hello');
+require('./test/test-calculette');
+require('./test/test-hello');
